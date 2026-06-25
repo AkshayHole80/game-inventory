@@ -1,6 +1,7 @@
 package com.ea.in_game_inventory.inventory.controller;
 
 import com.ea.in_game_inventory.inventory.dto.request.InventoryRequest;
+import com.ea.in_game_inventory.inventory.dto.request.QuantityUpdateRequest;
 import com.ea.in_game_inventory.inventory.dto.response.InventoryResponse;
 import com.ea.in_game_inventory.inventory.service.InventoryService;
 import jakarta.validation.Valid;
@@ -35,6 +36,24 @@ public class InventoryController {
                 inventoryService.getItemsByPlayerId(playerId)
         );
     }
+    @GetMapping("/{playerId}/rare")
+    public ResponseEntity<List<InventoryResponse>> getRareItems(
+            @PathVariable String playerId) {
 
+        List<InventoryResponse> response =
+                inventoryService.getRareItemsByPlayerId(playerId);
+
+        return ResponseEntity.ok(response);
+    }
+    @PutMapping("/{id}/quantity")
+    public ResponseEntity<InventoryResponse> updateQuantity(
+            @PathVariable String id,
+            @Valid @RequestBody QuantityUpdateRequest request) {
+
+        InventoryResponse response =
+                inventoryService.updateQuantity(id, request);
+
+        return ResponseEntity.ok(response);
+    }
 
 }
