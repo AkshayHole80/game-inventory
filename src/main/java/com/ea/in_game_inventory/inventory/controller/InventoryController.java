@@ -55,5 +55,13 @@ public class InventoryController {
 
         return ResponseEntity.ok(response);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteItem(
+            @PathVariable String id) {
+
+        inventoryService.deleteItem(id);
+
+        return ResponseEntity.noContent().build();
+    }
 
 }

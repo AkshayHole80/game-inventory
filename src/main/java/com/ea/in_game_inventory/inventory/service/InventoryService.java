@@ -14,4 +14,5 @@ public interface InventoryService {
             String id,
             QuantityUpdateRequest request
     );
+    void deleteItem(String id);
 }
