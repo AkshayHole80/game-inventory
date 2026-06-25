@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -30,6 +32,23 @@ public class InventoryServiceImpl implements InventoryService {
         log.info("Inventory item created successfully with id: {}", savedItem.getId());
 
         return modelMapper.map(savedItem, InventoryResponse.class);
+    }
+
+    @Override
+    public List<InventoryResponse> getItemsByPlayerId(String playerId) {
+
+        log.info("Fetching inventory items for player: {}", playerId);
+
+        List<InventoryItem> inventoryItems =
+                inventoryRepository.findByPlayerId(playerId);
+
+        log.info("Found {} inventory items for player {}",
+                inventoryItems.size(),
+                playerId);
+
+        return inventoryItems.stream()
+                .map(item -> modelMapper.map(item, InventoryResponse.class))
+                .toList();
     }
 
  }

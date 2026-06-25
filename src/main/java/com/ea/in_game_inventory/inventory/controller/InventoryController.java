@@ -4,15 +4,12 @@ import com.ea.in_game_inventory.inventory.dto.request.InventoryRequest;
 import com.ea.in_game_inventory.inventory.dto.response.InventoryResponse;
 import com.ea.in_game_inventory.inventory.service.InventoryService;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/inventory")
@@ -29,4 +26,15 @@ public class InventoryController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @GetMapping("/{playerId}")
+    public ResponseEntity<List<InventoryResponse>> getItemsByPlayerId(
+            @PathVariable String playerId) {
+
+        return ResponseEntity.ok(
+                inventoryService.getItemsByPlayerId(playerId)
+        );
+    }
+
+
 }
